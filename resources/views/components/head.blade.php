@@ -7,6 +7,9 @@
     <link rel="stylesheet"  href="{{ asset('assets/css/remixicon.css') }}">
     <!-- BootStrap css -->
     <link rel="stylesheet"  href="{{ asset('assets/css/lib/bootstrap.min.css') }}">
+
+    {{-- toaster --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/toastr.min.css') }}">
     <!-- Apex Chart css -->
     <link rel="stylesheet"  href="{{ asset('assets/css/lib/apexcharts.css') }}">
     <!-- Data Table css -->

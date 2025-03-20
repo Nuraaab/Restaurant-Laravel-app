@@ -2,6 +2,9 @@
     <script src="{{ asset('assets/js/lib/jquery-3.7.1.min.js') }}"></script>
     <!-- Bootstrap js -->
     <script src="{{ asset('assets/js/lib/bootstrap.bundle.min.js') }}"></script>
+
+    {{-- toaster --}}
+    <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
     <!-- Apex Chart js -->
     <script src="{{ asset('assets/js/lib/apexcharts.min.js') }}"></script>
     <!-- Data Table js -->
@@ -26,5 +29,31 @@
 
     <!-- main js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "4000"
+            };
+    
+            @if(session('success'))
+                toastr.success("{{ session('success') }}");
+            @endif
+    
+            @if(session('error'))
+                toastr.error("{{ session('error') }}");
+            @endif
+            @if(session('warning'))
+                toastr.warning("{{ session('warning') }}");
+            @endif
+
+            @if(session('info'))
+                toastr.info("{{ session('info') }}");
+            @endif
+        });
+    </script>
 
     <?php echo (isset($script) ? $script   : '')?>
