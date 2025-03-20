@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OfflinePaymentController;
+use App\Http\Controllers\OnlinePaymentController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AiapplicationController;
@@ -16,41 +25,166 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RoleandaccessController;
 use App\Http\Controllers\CryptocurrencyController;
 
-Route::controller(DashboardController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
-});
 
 Route::controller(HomeController::class)->group(function () {
-    Route::get('calendar','calendar')->name('calendar');
-    Route::get('chatmessage','chatMessage')->name('chatMessage');
-    Route::get('chatempty','chatempty')->name('chatempty');
-    Route::get('email','email')->name('email');
-    Route::get('error','error1')->name('error');
-    Route::get('faq','faq')->name('faq');
-    Route::get('gallery','gallery')->name('gallery');
-    Route::get('kanban','kanban')->name('kanban');
-    Route::get('pricing','pricing')->name('pricing');
-    Route::get('termscondition','termsCondition')->name('termsCondition');
-    Route::get('widgets','widgets')->name('widgets');
-    Route::get('chatprofile','chatProfile')->name('chatProfile');
-    Route::get('veiwdetails','veiwDetails')->name('veiwDetails');
-    Route::get('blankPage','blankPage')->name('blankPage');
-    Route::get('comingSoon','comingSoon')->name('comingSoon');
-    Route::get('maintenance','maintenance')->name('maintenance');
-    Route::get('starred','starred')->name('starred');
-    Route::get('testimonials','testimonials')->name('testimonials');
-    });
+    Route::get('/', 'comingSoon')->name('comingSoon');
+});
 
-    // aiApplication
+
+
+
+
+// Authentication
+Route::controller(AuthenticationController::class)->group(function () {
+    Route::get('/forgotpassword', 'forgotPassword')->name('forgotPassword');
+    Route::get('/signin', 'signin')->name('signin');
+    Route::get('/signup', 'signup')->name('signup');
+});
+
+
+//dashboard
+
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/dashboard', 'index3')->name('index3');
+});
+
+
+//category
+Route::resource('category', CategoryController::class);
+
+//products
+Route::resource('products', ProductController::class);
+
+
+//review
+Route::resource('review', ReviewController::class);
+
+//coupon
+Route::resource('coupon', CouponController::class);
+
+//cart
+Route::resource('cart', CartController::class);
+
+//order
+Route::resource('order', OrderController::class);
+
+//OnlinePaymentController
+Route::resource('onlinepayment', OnlinePaymentController::class);
+
+//OfflinePaymentController
+Route::resource('offlinepayment', OfflinePaymentController::class);
+
+//invoice
+Route::resource('invoice', InvoiceController::class);
+
+
+//users
+Route::resource('users', UsersController::class);
+
+
+//users
+Route::resource('customer', CustomerController::class);
+
+//roles
+Route::resource('roleandaccess', RoleandaccessController::class);
+
+//settings
+Route::controller(SettingsController::class)->group(function () {
+    // set Receipt_footer
+    Route::put('changereceiptfooter', 'changeReceiptFooter')->name('changeReceiptFooter');
+    // set Receipt_header
+    Route::put('changereceiptheader', 'changeReceiptHeader')->name('changeReceiptHeader');
+    //Receipt_stamp
+    Route::put('changereceiptstamp', 'changeReceiptStamp')->name('changeReceiptStamp');
+
+    // Change logo
+
+    Route::put('changelogo', 'changeLogo')->name('changeLogo');
+
+    // Change colors
+
+
+    Route::put('changecolors', 'changeColors')->name('changeColors');
+
+    Route::put('/updatecurrencies', 'updateCurrencies')->name('updateCurrencies');
+
+    Route::get('/company', 'company')->name('company');
+    
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::controller(HomeController::class)->group(function () {
+    Route::get('calendar', 'calendar')->name('calendar');
+    Route::get('chatmessage', 'chatMessage')->name('chatMessage');
+    Route::get('chatempty', 'chatempty')->name('chatempty');
+    Route::get('email', 'email')->name('email');
+    Route::get('error', 'error1')->name('error');
+    Route::get('faq', 'faq')->name('faq');
+    Route::get('gallery', 'gallery')->name('gallery');
+    Route::get('kanban', 'kanban')->name('kanban');
+    Route::get('pricing', 'pricing')->name('pricing');
+    Route::get('termscondition', 'termsCondition')->name('termsCondition');
+    Route::get('widgets', 'widgets')->name('widgets');
+    Route::get('chatprofile', 'chatProfile')->name('chatProfile');
+    Route::get('veiwdetails', 'veiwDetails')->name('veiwDetails');
+    Route::get('blankPage', 'blankPage')->name('blankPage');
+    Route::get('comingSoon', 'comingSoon')->name('comingSoon');
+    Route::get('maintenance', 'maintenance')->name('maintenance');
+    Route::get('starred', 'starred')->name('starred');
+    Route::get('testimonials', 'testimonials')->name('testimonials');
+});
+
+// aiApplication
 Route::prefix('aiapplication')->group(function () {
     Route::controller(AiapplicationController::class)->group(function () {
         Route::get('/codegenerator', 'codeGenerator')->name('codeGenerator');
         Route::get('/codegeneratornew', 'codeGeneratorNew')->name('codeGeneratorNew');
-        Route::get('/imagegenerator','imageGenerator')->name('imageGenerator');
-        Route::get('/textgeneratornew','textGeneratorNew')->name('textGeneratorNew');
-        Route::get('/textgenerator','textGenerator')->name('textGenerator');
-        Route::get('/videogenerator','videoGenerator')->name('videoGenerator');
-        Route::get('/voicegenerator','voiceGenerator')->name('voiceGenerator');
+        Route::get('/imagegenerator', 'imageGenerator')->name('imageGenerator');
+        Route::get('/textgeneratornew', 'textGeneratorNew')->name('textGeneratorNew');
+        Route::get('/textgenerator', 'textGenerator')->name('textGenerator');
+        Route::get('/videogenerator', 'videoGenerator')->name('videoGenerator');
+        Route::get('/voicegenerator', 'voiceGenerator')->name('voiceGenerator');
     });
 });
 
@@ -104,15 +238,15 @@ Route::prefix('dashboard')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::get('/index2', 'index2')->name('index2');
-        Route::get('/index3', 'index3')->name('index3');
+        // Route::get('/index3', 'index3')->name('index3');
         Route::get('/index4', 'index4')->name('index4');
-        Route::get('/index5','index5')->name('index5');
-        Route::get('/index6','index6')->name('index6');
-        Route::get('/index7','index7')->name('index7');
-        Route::get('/index8','index8')->name('index8');
-        Route::get('/index9','index9')->name('index9');
-        Route::get('/index10','index10')->name('index10');
-        Route::get('/wallet','wallet')->name('wallet');
+        Route::get('/index5', 'index5')->name('index5');
+        Route::get('/index6', 'index6')->name('index6');
+        Route::get('/index7', 'index7')->name('index7');
+        Route::get('/index8', 'index8')->name('index8');
+        Route::get('/index9', 'index9')->name('index9');
+        Route::get('/index10', 'index10')->name('index10');
+        Route::get('/wallet', 'wallet')->name('wallet');
     });
 });
 
