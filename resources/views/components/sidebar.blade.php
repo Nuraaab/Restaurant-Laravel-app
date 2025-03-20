@@ -12,90 +12,110 @@
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
             <li>
-                <a  href="{{ route('index3') }}">
+                <a href="{{ route('index3') }}">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-menu-group-title">Menue Management</li>
-            <li>
-                  <a href="{{ route('email') }}">
-                    <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
-                    <span>Categories</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('chatMessage') }}">
-                    <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
-                    <span>Items</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('calendar') }}">
-                    <iconify-icon icon="solar:calendar-outline" class="menu-icon"></iconify-icon>
-                    <span>Coupones</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('kanban') }}">
-                    <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
-                    <span>Orders</span>
-                </a>
-            </li>
             <li class="dropdown">
-                <a  href="javascript:void(0)">
-                    <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
-                    <span>Invoice</span>
+                <a href="javascript:void(0)">
+                    <iconify-icon icon="heroicons:bars-3-solid" class="menu-icon"></iconify-icon>
+                    <span>Menue Management</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                    <a href="{{ route('invoiceList') }}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> List</a>
+                        <a href="{{ route('email') }}">
+                            <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
+                            <span>Categories</span>
+                        </a>
                     </li>
                     <li>
-                    <a href="{{ route('invoicePreview') }}"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Preview</a>
+                        <a href="{{ route('chatMessage') }}">
+                            <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
+                            <span>Items</span>
+                        </a>
                     </li>
                     <li>
-                    <a href="{{ route('invoiceAdd') }}"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add new</a>
+                        <a href="{{ route('calendar') }}">
+                            <iconify-icon icon="solar:calendar-outline" class="menu-icon"></iconify-icon>
+                            <span>Coupones</span>
+                        </a>
                     </li>
                     <li>
-                    <a href="{{ route('invoiceEdit') }}"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Edit</a>
+                        <a href="{{ route('kanban') }}">
+                            <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
+                            <span>Invoice</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ route('invoiceList') }}"><i
+                                        class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> List</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('invoicePreview') }}"><i
+                                        class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Preview</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('invoiceAdd') }}"><i
+                                        class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add new</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('invoiceEdit') }}"><i
+                                        class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Edit</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
 
-            <li class="sidebar-menu-group-title">Payment Log</li>
             <li>
-                  <a href="{{ route('email') }}">
+                <a href="{{ route('email') }}">
                     <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
                     <span>Payment Log</span>
                 </a>
             </li>
-            <li class="sidebar-menu-group-title">Payment Gateway</li>
-            <li>
-                  <a href="{{ route('email') }}">
-                    <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
-                    <span>Offline</span>
+            <li class="dropdown">
+                <a href="javascript:void(0)">
+                    <iconify-icon icon="heroicons:banknotes-solid" class="menu-icon"></iconify-icon>
+                    <span>Payment Gateway</span>
                 </a>
-            </li>
-            <li>
-                <a href="{{ route('chatMessage') }}">
-                    <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
-                    <span>Online</span>
-                </a>
+
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('email') }}">
+                            <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
+                            <span>Offline</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('chatMessage') }}">
+                            <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
+                            <span>Online</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="sidebar-menu-group-title">User Management</li>
 
             <li class="dropdown">
-                <a  href="javascript:void(0)">
+                <a href="javascript:void(0)">
                     <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
                     <span>Customers</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a  href="{{ route('usersList') }}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Customer List</a>
+                        <a href="{{ route('usersList') }}"><i
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Customer List</a>
                     </li>
                     <li>
-                        <a  href="{{ route('usersGrid') }}"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Customer Grid</a>
+                        <a href="{{ route('usersGrid') }}"><i
+                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Customer Grid</a>
                     </li>
                     {{-- <li>
                         <a  href="{{ route('addUser') }}"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add User</a>
@@ -104,38 +124,42 @@
                         <a  href="{{ route('viewProfile') }}"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> View Profile</a>
                     </li> --}}
                 </ul>
-                <a  href="javascript:void(0)">
+                <a href="javascript:void(0)">
                     <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
                     <span>Admins</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a  href="{{ route('usersList') }}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Admins List</a>
+                        <a href="{{ route('usersList') }}"><i
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Admins List</a>
                     </li>
                     <li>
-                        <a  href="{{ route('usersGrid') }}"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Add Admin</a>
+                        <a href="{{ route('usersGrid') }}"><i
+                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Add Admin</a>
                     </li>
                 </ul>
             </li>
 
             <li class="dropdown">
-                <a  href="javascript:void(0)">
+                <a href="javascript:void(0)">
                     <i class="ri-user-settings-line text-xl me-6 d-flex w-auto"></i>
                     <span>Role & Access</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a  href="{{ route('roleAaccess') }}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Role & Access</a>
+                        <a href="{{ route('roleAaccess') }}"><i
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Role & Access</a>
                     </li>
                     <li>
-                        <a  href="{{ route('assignRole') }}"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Assign Role</a>
+                        <a href="{{ route('assignRole') }}"><i
+                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Assign Role</a>
                     </li>
                 </ul>
             </li>
 
             <li class="sidebar-menu-group-title">Settings</li>
             <li class="dropdown">
-                <a  href="javascript:void(0)">
+                <a href="javascript:void(0)">
                     <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
                     <span>Settings</span>
                 </a>
