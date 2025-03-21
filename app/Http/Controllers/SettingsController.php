@@ -40,5 +40,29 @@ class SettingsController extends Controller
     {
         return view('settings/theme');
     }
+
+    public function changeReceiptFooter(){
+
+    }
+
+    public function changeReceiptHeader(){
+    }
+
+    public function updateCurrencies(){
+
+    }
+
+    public function changeReceiptStamp(){
+
+    }
+
+    public function changeLogo()
+    {
+
+    }
+
+    public function changeColors(){
+        
+    }
     
 }
