@@ -3,6 +3,9 @@
     <!-- Bootstrap js -->
     <script src="{{ asset('assets/js/lib/bootstrap.bundle.min.js') }}"></script>
 
+    <script src="{{ asset('assets/js/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
     {{-- toaster --}}
     <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
     <!-- Apex Chart js -->
@@ -26,34 +29,100 @@
     <script src="{{ asset('assets/js/lib/file-upload.js') }}"></script>
     <!-- audioplayer -->
     <script src="{{ asset('assets/js/lib/audioplayer.js') }}"></script>
+    
 
     <!-- main js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "timeOut": "4000"
-            };
-    
-            @if(session('success'))
-                toastr.success("{{ session('success') }}");
-            @endif
-    
-            @if(session('error'))
-                toastr.error("{{ session('error') }}");
-            @endif
-            @if(session('warning'))
-                toastr.warning("{{ session('warning') }}");
-            @endif
+   
 
-            @if(session('info'))
-                toastr.info("{{ session('info') }}");
-            @endif
+    
+    @if (session()->has('success'))
+    <script>
+        "use strict";
+        var content = {};
+    
+        content.message = '{{ session('success') }}';
+        content.title = 'Success';
+        content.icon = 'ic:baseline-notifications';  // Example of an icon from Iconify
+    
+        $.notify(content, {
+            type: 'success',
+            placement: {
+                from: 'top',
+                align: 'right'
+            },
+            showProgressbar: true,
+            time: 1000,
+            delay: 4000,
         });
     </script>
+    @endif
+
+    @if (session()->has('error'))
+    <script>
+        "use strict";
+        $.notify({
+            message: "{{ session('error') }}",
+            title: "Error",
+            icon: "<i class='fas fa-times-circle'></i>"  
+        }, {
+            type: 'danger',
+            placement: {
+                from: 'top',
+                align: 'right'
+            },
+            showProgressbar: true,
+            delay: 4000
+        });
+    </script>
+    @endif
+    
+    
+    @if (session()->has('warning'))
+    <script>
+        "use strict";
+        var content = {};
+    
+        content.message = '{{ session('warning') }}';
+        content.title = "{{ __('Warning!') }}";
+        content.icon = 'ic:baseline-warning';  // Example of an icon from Iconify
+    
+        $.notify(content, {
+            type: 'warning',
+            placement: {
+                from: 'top',
+                align: 'right'
+            },
+            showProgressbar: true,
+            time: 1000,
+            delay: 4000,
+        });
+    </script>
+    @endif
+    
+    @if (session()->has('info'))
+    <script>
+        "use strict";
+        var content = {};
+    
+        content.message = '{{ session('info') }}';
+        content.title = "{{ __('Information') }}";
+        content.icon = 'ic:baseline-info';  // Example of an icon from Iconify
+    
+        $.notify(content, {
+            type: 'info',
+            placement: {
+                from: 'top',
+                align: 'right'
+            },
+            showProgressbar: true,
+            time: 1000,
+            delay: 4000,
+        });
+    </script>
+    @endif
+    
+
 
     <?php echo (isset($script) ? $script   : '')?>

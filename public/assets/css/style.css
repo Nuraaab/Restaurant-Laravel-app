@@ -399,6 +399,36 @@ body::after {
   z-index: 2;
 }
 
+/* loader */
+.request-loader {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .7);
+  z-index: 9999;
+  display: none;
+}
+
+.request-loader img {
+  max-width: 120px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.request-loader.show {
+  display: block !important;
+}
+
+/* loader end */
+
+
+
 main {
   display: block;
 }
@@ -483,9 +513,7 @@ a:hover {
   text-decoration: none;
 }
 
-strong {
-  font-weight: 700;
-}
+
 
 a:hover {
   color: var(--primary);
@@ -495,10 +523,7 @@ abbr[title] {
   text-decoration: underline dotted;
 }
 
-b,
-strong {
-  font-weight: bolder;
-}
+
 
 code,
 kbd,
@@ -4882,9 +4907,7 @@ html[data-theme=dark] .bg-light-pink {
   margin-block-end: var(--size-2) !important;
 }
 
-.mb-4 {
-  margin-block-end: var(--size-4) !important;
-}
+
 
 .mb-6 {
   margin-block-end: var(--size-6) !important;
@@ -6457,7 +6480,7 @@ html[data-theme=dark] .bg-light-pink {
 /* === animation css start === */
 /* === animation css end === */
 /* === typography css start === */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4,  h6 {
   color: var(--text-primary-light);
   font-weight: 600;
 }
@@ -6478,9 +6501,7 @@ h4, .h4 {
   font-size: var(--h4) !important;
 }
 
-h5, .h5 {
-  font-size: var(--h5) !important;
-}
+
 
 h6, .h6 {
   font-size: var(--h6) !important;

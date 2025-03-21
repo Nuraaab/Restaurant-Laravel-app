@@ -16,9 +16,14 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RoleandaccessController;
 use App\Http\Controllers\CryptocurrencyController;
 
+// menu
+use App\Http\Controllers\CategoryController;
+
 Route::controller(DashboardController::class)->group(function () {
     Route::get('/', 'index')->name('index');
 });
+
+
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('calendar','calendar')->name('calendar');
@@ -39,6 +44,18 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('maintenance','maintenance')->name('maintenance');
     Route::get('starred','starred')->name('starred');
     Route::get('testimonials','testimonials')->name('testimonials');
+    });
+
+    // menu category
+    Route::prefix('menu')->group(function () {
+        Route::controller(CategoryController::class)->group(function () {
+            Route::get('/category', 'index')->name('user.menu.category.index');
+            Route::post('/category/store', 'store')->name('user.menu.category.store');
+            Route::get('/category/{id}/edit', 'edit')->name('user.menu.category.edit');
+            Route::post('/category/update', 'update')->name('user.menu.category.update');
+            Route::post('/category/delete', 'delete')->name('user.menu.category.delete');
+        });
+        
     });
 
     // aiApplication

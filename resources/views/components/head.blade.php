@@ -3,6 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wowdash - Bootstrap 5 Admin Dashboard HTML Template</title>
     <link rel="icon" type="image/png"  href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <!-- remix icon font css  -->
     <link rel="stylesheet"  href="{{ asset('assets/css/remixicon.css') }}">
     <!-- BootStrap css -->
@@ -34,6 +36,7 @@
     <link rel="stylesheet"  href="{{ asset('assets/css/lib/file-upload.css') }}">
 
     <link rel="stylesheet"  href="{{ asset('assets/css/lib/audioplayer.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/atlantis.css') }}">
     <!-- main css -->
     <link rel="stylesheet"  href="{{ asset('assets/css/style.css') }}">
 </head>

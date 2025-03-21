@@ -4,7 +4,7 @@
     </button>
     <div>
         <a href="{{ route('index') }}" class="sidebar-logo">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="site logo" class="light-logo">
+            <img src="{{ asset('assets/images/logo1111.png') }}" alt="site logo" class="light-logo">
             <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
             <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
         </a>
@@ -19,7 +19,7 @@
             </li>
             <li class="sidebar-menu-group-title">Menue Management</li>
             <li>
-                  <a href="{{ route('email') }}">
+                  <a href="{{ route('user.menu.category.index') }}">
                     <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
                     <span>Categories</span>
                 </a>

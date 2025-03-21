@@ -1,6 +1,131 @@
 (function ($) {
   'use strict';
 
+  //  image (id) preview js/
+  $(document).on('change', '#image', function (event) {
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('.showImage img').attr('src', e.target.result);
+    };
+    reader.readAsDataURL(file);
+  })
+  //  image (class) preview js/
+  $(document).on('change', '.image', function (event) {
+    let $this = $(this);
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $this.prev('.showImage').children('img').attr('src', e.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // displaying error messages
+  $(document).on('click', '#submitBtn', function (e) {
+    console.log('Hiiiii');
+    $(e.target).attr('disabled', true);
+
+    console.log('loader', $(".request-loader"));
+    $(".request-loader").addClass("show");
+
+    let ajaxForm = document.getElementById('ajaxForm');
+    let fd = new FormData(ajaxForm);
+    let url = $("#ajaxForm").attr('action');
+    let method = $("#ajaxForm").attr('method');
+
+    if ($("#ajaxForm .summernote").length > 0) {
+      $("#ajaxForm .summernote").each(function (i) {
+        let content = $(this).summernote('isEmpty') ? '' : $(this).summernote('code');
+
+        fd.delete($(this).attr('name'));
+        fd.append($(this).attr('name'), content);
+      });
+    }
+
+    $.ajax({
+      url: url,
+      method: method,
+      data: fd,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        console.log('success', typeof data.error);
+        console.log('data: ', data.error);
+        $(e.target).attr('disabled', false);
+        $(".request-loader").removeClass("show");
+
+        $(".em").each(function () {
+          $(this).html('');
+        })
+        console.log('Data: ', data);
+        if (data == "warning") {
+          location.reload();
+        }
+        if (data == "success") {
+          console.log('data: ');
+          location.reload();
+        }
+       
+
+        // if error occurs
+        else if (typeof data.error != 'undefined') {
+          for (let x in data) {
+            console.log('value of x', x);
+            if (x == 'error') {
+              continue;
+            }
+            document.getElementById('err' + x).innerHTML = data[x][0];
+            
+          }
+        }
+      },
+      error: function (error) {
+
+        $(".em").each(function () {
+          $(this).html('');
+        })
+        console.log('error' ,error.responseJSON.errors);
+        for (let x in error.responseJSON.errors) {
+          document.getElementById('err' + x).innerHTML = error.responseJSON.errors[x][0];
+        }
+        $(".request-loader").removeClass("show");
+        $(e.target).attr('disabled', false);
+      }
+    });
+  });
+
+
+  // delete confirm button
+  $('.deletebtn').on('click', function (e) {
+    e.preventDefault();
+
+    $(".request-loader").addClass("show");
+
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      buttons: {
+        confirm: {
+          text: 'Yes, delete it!',
+          className: 'btn btn-success'
+        },
+        cancel: {
+          visible: true,
+          className: 'btn btn-danger'
+        }
+      }
+    }).then((Delete) => {
+      if (Delete) {
+        $(this).parent(".deleteform").trigger('submit');
+      } else {
+        swal.close();
+        $(".request-loader").removeClass("show");
+      }
+    });
+  });
+
   // sidebar submenu collapsible js
   $(".sidebar-menu .dropdown").on("click", function(){
     var item = $(this);
