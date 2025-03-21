@@ -428,6 +428,9 @@ body::after {
 /* loader end */
 
 
+.sidebar, .sidebar[data-background-color="white"] {
+  margin-top: 0px !important;
+}
 
 main {
   display: block;
@@ -14752,7 +14755,7 @@ td.fc-header-center {
 @media (min-width: 1200px) {
   .sidebar {
     inset-inline-start: 0;
-    width: 13.75rem;
+    width: 14.75rem;
   }
 }
 @media (min-width: 1400px) {
@@ -15092,8 +15095,12 @@ td.fc-header-center {
     margin-inline-start: 19.5rem;
   }
 }
-.dashboard-main-body {
+/* .dashboard-main-body {
   padding: 0.9375rem;
+} */
+
+.dashboard-main-body {
+  padding: 1.9375rem;
 }
 
 @media (min-width: 1400px) {

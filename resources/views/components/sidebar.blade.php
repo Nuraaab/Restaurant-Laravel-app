@@ -11,7 +11,7 @@
     </div>
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
-            <li>
+            <li >
                 <a href="{{ route('index3') }}">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
@@ -24,7 +24,7 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{ route('email') }}">
+                        <a href="{{ route('user.menu.category.index') }}">
                             <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
                             <span>Categories</span>
                         </a>
