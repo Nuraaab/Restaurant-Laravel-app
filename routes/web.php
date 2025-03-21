@@ -49,8 +49,18 @@ Route::controller(DashboardController::class)->group(function () {
 });
 
 
-//category
-Route::resource('category', CategoryController::class);
+ // menu category
+ Route::prefix('menu')->group(function () {
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/category', 'index')->name('user.menu.category.index');
+        Route::post('/category/store', 'store')->name('user.menu.category.store');
+        Route::get('/category/{id}/edit', 'edit')->name('user.menu.category.edit');
+        Route::post('/category/update', 'update')->name('user.menu.category.update');
+        Route::post('/category/delete', 'delete')->name('user.menu.category.delete');
+    });
+    
+});
+// Route::resource('category', CategoryController::class);
 
 //products
 Route::resource('products', ProductController::class);
