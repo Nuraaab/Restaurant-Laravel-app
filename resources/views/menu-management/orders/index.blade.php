@@ -110,11 +110,10 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center gap-10 justify-content-center">
-                                            {{-- <a href="{{ route('user.menu.order.delete', $order->id) }}"
-                                                class="remove-item-btn bg-danger-focus bg-hover-danger-200 text-danger-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle deletebtn">
-                                                <iconify-icon icon="fluent:delete-24-regular"
-                                                    class="menu-icon"></iconify-icon>
-                                            </a> --}}
+                                            <a href="{{ route('user.menu.order.show', $order->id) }}"
+                                                class="bg-info-focus bg-hover-info-200 text-info-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle">
+                                                <iconify-icon icon="carbon:view" class="menu-icon"></iconify-icon>
+                                            </a>
                                             <form action="{{ route('user.menu.order.delete') }}" class="deleteform"
                                                 method="post">
                                                 @csrf
