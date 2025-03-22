@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
@@ -43,9 +44,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $order = Order::with('items')->findOrFail($id);
+        return view('menu-management.orders.show', compact('order'));
     }
 
     /**
@@ -67,8 +69,11 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function delete(Request $request)
     {
-        //
+        $order = Order::findOrFail($request->order_id);
+        $order->delete();
+        Session::flash('success', 'Order deleted successfully!');
+        return back();
     }
 }
