@@ -44,9 +44,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $order = Order::with('items')->findOrFail($id);
+        return view('menu-management.orders.show', compact('order'));
     }
 
     /**

@@ -63,6 +63,7 @@ Route::prefix('menu')->group(function () {
         Route::get('/order', 'index')->name('user.menu.order.index');
         Route::post('/order/store', 'store')->name('user.menu.order.store');
         Route::post('/order/delete', 'delete')->name('user.menu.order.delete');
+        Route::get('/order/{id}', 'show')->name('user.menu.order.show');
     });
 });
 // Route::resource('category', CategoryController::class);
