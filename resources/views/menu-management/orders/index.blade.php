@@ -59,6 +59,7 @@
                         <thead>
 
                             <th scope="col">Order ID</th>
+                            <th scope="col">Order Date</th>
                             <th scope="col">Customer Name</th>
                             <th scope="col">Total</th>
                             <th scope="col">Sub Total</th>
@@ -75,11 +76,12 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>{{ $order->id }}</td>
+                                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
                                     <td>{{ $order->first_name }} {{ $order->last_name }}</td>
-                                    <td>{{ $order->currency_code }} {{ number_format($order->total, 2) }}</td>
-                                    <td>{{ $order->currency_code }} {{ number_format($order->sub_total, 2) }}</td>
-                                    <td>{{ $order->currency_code }} {{ number_format($order->discount_amount, 2) }}</td>
-                                    <td>{{ $order->currency_code }} {{ number_format($order->coupon_discount, 2) }}</td>
+                                    <td>{{ number_format($order->total, 2) }}{{ $order->currency_code }} </td>
+                                    <td>{{ number_format($order->sub_total, 2) }}{{ $order->currency_code }} </td>
+                                    <td>{{ number_format($order->discount_amount, 2) }}{{ $order->currency_code }} </td>
+                                    <td>{{ number_format($order->coupon_discount, 2) }}{{ $order->currency_code }} </td>
                                     <td>{{ $order->payment_method }}</td>
                                     <td>{{ $order->payment_type }}</td>
                                     <td>
@@ -108,12 +110,12 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center gap-10 justify-content-center">
-                                            <a href="{{ route('user.menu.order.delete', $order->id) }}"
+                                            {{-- <a href="{{ route('user.menu.order.delete', $order->id) }}"
                                                 class="remove-item-btn bg-danger-focus bg-hover-danger-200 text-danger-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle deletebtn">
                                                 <iconify-icon icon="fluent:delete-24-regular"
                                                     class="menu-icon"></iconify-icon>
-                                            </a>
-                                            {{-- <form action="{{ route('user.menu.order.delete') }}" class="deleteform"
+                                            </a> --}}
+                                            <form action="{{ route('user.menu.order.delete') }}" class="deleteform"
                                                 method="post">
                                                 @csrf
                                                 <input type="hidden" name="order_id" value="{{ $order->id }}">
@@ -122,7 +124,7 @@
                                                     <iconify-icon icon="fluent:delete-24-regular"
                                                         class="menu-icon"></iconify-icon>
                                                 </button>
-                                            </form> --}}
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
