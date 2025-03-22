@@ -16,7 +16,7 @@
             class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
             <div class="d-flex align-items-center flex-wrap gap-3">
                 <span class="text-md fw-medium text-secondary-light mb-0">Show</span>
-                <form method="GET" action="{{ route('user.menu.category.index') }}" class="d-flex align-items-center gap-2">
+                <form method="GET" action="{{ route('user.menu.order.index') }}" class="d-flex align-items-center gap-2">
                     <select name="per_page" class="form-select form-select-sm w-auto ps-12 py-6 radius-12 h-40-px"
                         onchange="this.form.submit()">
                         @foreach ([10, 25, 50, 100] as $size)
@@ -58,51 +58,71 @@
                     <table class="table bordered-table sm-table mb-0">
                         <thead>
 
-                            <th scope="col">Name</th>
-                            <th scope="col">Image</th>
-                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Sub Total</th>
+                            <th scope="col">Discount Amount</th>
+                            <th scope="col">Coupon Discount</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Payment Type</th>
+                            <th scope="col">Payment Status</th>
+                            <th scope="col">Order Status</th>
                             <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
                                 <tr>
-
-                                    <td>{{ $order->name }}</td>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->first_name }} {{ $order->last_name }}</td>
+                                    <td>{{ $order->currency_code }} {{ number_format($order->total, 2) }}</td>
+                                    <td>{{ $order->currency_code }} {{ number_format($order->sub_total, 2) }}</td>
+                                    <td>{{ $order->currency_code }} {{ number_format($order->discount_amount, 2) }}</td>
+                                    <td>{{ $order->currency_code }} {{ number_format($order->coupon_discount, 2) }}</td>
+                                    <td>{{ $order->payment_method }}</td>
+                                    <td>{{ $order->payment_type }}</td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/admin/img/categories/' . $category->image) }}"
-                                                alt=""
-                                                class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        @if ($order->status == 1)
+                                        @if ($order->payment_status == 'completed')
                                             <span
-                                                class="bg-success-focus text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm">Active</span>
+                                                class="bg-success-focus text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm">Completed</span>
+                                        @elseif ($order->payment_status == 'pending')
+                                            <span
+                                                class="bg-warning-focus text-warning-600 border border-warning-main px-24 py-4 radius-4 fw-medium text-sm">Pending</span>
                                         @else
                                             <span
-                                                class="bg-danger-focus text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm">Deactive</span>
+                                                class="bg-danger-focus text-danger-600 border border-danger-main px-24 py-4 radius-4 fw-medium text-sm">Failed</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($order->order_status == 'delivered')
+                                            <span
+                                                class="bg-success-focus text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm">Delivered</span>
+                                        @elseif ($order->order_status == 'shipped')
+                                            <span
+                                                class="bg-info-focus text-info-600 border border-info-main px-24 py-4 radius-4 fw-medium text-sm">Shipped</span>
+                                        @else
+                                            <span
+                                                class="bg-warning-focus text-warning-600 border border-warning-main px-24 py-4 radius-4 fw-medium text-sm">Pending</span>
                                         @endif
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center gap-10 justify-content-center">
-
-                                            <a href="{{ route('user.menu.category.edit', $category->id) }}"
-                                                class="bg-success-focus text-success-600 bg-hover-success-200 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle">
-                                                <iconify-icon icon="lucide:edit" class="menu-icon"></iconify-icon>
+                                            <a href="{{ route('user.menu.order.delete', $order->id) }}"
+                                                class="remove-item-btn bg-danger-focus bg-hover-danger-200 text-danger-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle deletebtn">
+                                                <iconify-icon icon="fluent:delete-24-regular"
+                                                    class="menu-icon"></iconify-icon>
                                             </a>
-                                            <form action="{{ route('user.menu.category.delete') }}" class="deleteform"
+                                            {{-- <form action="{{ route('user.menu.order.delete') }}" class="deleteform"
                                                 method="post">
                                                 @csrf
-                                                <input type="hidden" name="category_id" value="{{ $category->id }}">
+                                                <input type="hidden" name="order_id" value="{{ $order->id }}">
                                                 <button type="submit"
                                                     class="remove-item-btn bg-danger-focus bg-hover-danger-200 text-danger-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle deletebtn">
                                                     <iconify-icon icon="fluent:delete-24-regular"
                                                         class="menu-icon"></iconify-icon>
                                                 </button>
-                                            </form>
+                                            </form> --}}
                                         </div>
                                     </td>
                                 </tr>
