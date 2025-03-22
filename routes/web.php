@@ -62,7 +62,7 @@ Route::prefix('menu')->group(function () {
     Route::controller(OrderController::class)->group(function () {
         Route::get('/order', 'index')->name('user.menu.order.index');
         Route::post('/order/store', 'store')->name('user.menu.order.store');
-        Route::post('/order/delete', 'delete')->name('user.menu.order.delete');
+        Route::post('/order/{id}/delete', 'delete')->name('user.menu.order.delete');
     });
 });
 // Route::resource('category', CategoryController::class);
