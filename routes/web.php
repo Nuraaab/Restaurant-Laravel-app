@@ -60,6 +60,15 @@ Route::controller(DashboardController::class)->group(function () {
     });
     
 });
+
+//menue order
+Route::prefix('menu')->group(function () {
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/order', 'index')->name('user.menu.order.index');
+        Route::post('/order/store', 'store')->name('user.menu.order.store');
+        Route::post('/order/delete', 'delete')->name('user.menu.order.delete');
+    });
+});
 // Route::resource('category', CategoryController::class);
 
 //products
@@ -308,6 +317,9 @@ Route::prefix('users')->group(function () {
         Route::get('/users-grid', 'usersGrid')->name('usersGrid');
         Route::get('/users-list', 'usersList')->name('usersList');
         Route::get('/view-profile', 'viewProfile')->name('viewProfile');
+        Route::get('/add-customer', 'addUser')->name('addCustomer');
+        Route::get('/customer-grid', 'usersGrid')->name('CustomerGridGrid');
+        Route::get('/customer-list', 'usersList')->name('CustomerList');
     });
 });
 
