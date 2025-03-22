@@ -49,8 +49,8 @@ Route::controller(DashboardController::class)->group(function () {
 });
 
 
- // menu category
- Route::prefix('menu')->group(function () {
+// menu category
+Route::prefix('menu')->group(function () {
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/category', 'index')->name('user.menu.category.index');
         Route::post('/category/store', 'store')->name('user.menu.category.store');
@@ -58,11 +58,7 @@ Route::controller(DashboardController::class)->group(function () {
         Route::post('/category/update', 'update')->name('user.menu.category.update');
         Route::post('/category/delete', 'delete')->name('user.menu.category.delete');
     });
-    
-});
-
-//menue order
-Route::prefix('menu')->group(function () {
+    //orders
     Route::controller(OrderController::class)->group(function () {
         Route::get('/order', 'index')->name('user.menu.order.index');
         Route::post('/order/store', 'store')->name('user.menu.order.store');
@@ -128,7 +124,6 @@ Route::controller(SettingsController::class)->group(function () {
     Route::put('/updatecurrencies', 'updateCurrencies')->name('updateCurrencies');
 
     Route::get('/company', 'company')->name('company');
-    
 });
 
 
