@@ -10,9 +10,18 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+        $query = Order::query();
+        if (!empty($search)) {
+            $query->where('name', 'like', "%$search%");
+        }
+        $data['orders'] = $query->orderBy('id', 'DESC')->paginate($perPage);
+        $data['search'] = $search;
+        $data['perPage'] = $perPage;
+        return view('menu-management.orders.index', $data);
     }
 
     /**
