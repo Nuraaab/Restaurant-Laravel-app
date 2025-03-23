@@ -66,6 +66,26 @@ Route::prefix('menu')->group(function () {
         Route::get('/order/{id}', 'show')->name('user.menu.order.show');
     });
 });
+
+Route::prefix('menu')->group(function () {
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/item', 'index')->name('user.menu.item.index');
+        Route::get('/item/create', 'create')->name('user.menu.item.create');
+        Route::post('/item/store', 'store')->name('user.menu.item.store');
+        Route::get('/item/{id}/edit', 'edit')->name('user.menu.item.edit');
+        Route::post('/item/update', 'update')->name('user.menu.item.update');
+        Route::post('/item/delete', 'delete')->name('user.menu.item.delete');
+
+        Route::post('/item/feature', 'feature')->name('user.menu.item.feature');
+        Route::post('/item/flash-remove', 'flashRemove')->name('user.menu.item.flash.remove');
+        Route::post('/item/setFlashSale/{id}', 'setFlashSale')->name('user.menu.item.setFlashSale');
+
+        Route::post('/item/slider', 'slider')->name('user.item.slider');
+        Route::post('/item/slider/remove', 'sliderRemove')->name('user.item.slider-remove');
+        Route::post('/item/slider/db-remove', 'dbSliderRemove')->name('user.item.db-slider-remove');
+    });
+    
+});
 // Route::resource('category', CategoryController::class);
 
 //products

@@ -6,6 +6,12 @@
     <script src="{{ asset('assets/js/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
+
+    <script src="{{ asset('assets/js/jquery.dropzone.min.js') }}"></script>
+    <!-- Bootstrap Datepicker JS -->
+    <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
+
+    <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
     {{-- toaster --}}
     <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
     <!-- Apex Chart js -->
@@ -123,6 +129,15 @@
     </script>
     @endif
     
-
-
+    <script>
+        "use strict";
+        const currUrl = "{{ url()->current() }}";
+        const fullUrl = "{!! url()->full() !!}";
+        const uploadSliderImage = "{{ route('user.item.slider') }}";
+        const rmvSliderImage = "{{ route('user.item.slider-remove') }}";
+        const rmvDbSliderImage = "{{ route('user.item.db-slider-remove') }}";
+    </script>
+    
+    {{-- <script src="{{ asset('assets/js/dropzone-slider.js') }}"></script>   --}}
+  
     <?php echo (isset($script) ? $script   : '')?>

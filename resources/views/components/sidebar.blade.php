@@ -25,16 +25,17 @@
                 <ul class="sidebar-submenu">
                     <li>
                         <a href="{{ route('user.menu.category.index') }}">
-                            <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
+                            <iconify-icon icon="mdi:format-list-bulleted" class="menu-icon"></iconify-icon>
                             <span>Categories</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('chatMessage') }}">
-                            <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
+                        <a href="{{ route('user.menu.item.index') }}">
+                            <iconify-icon icon="mdi:package-variant" class="menu-icon"></iconify-icon>
                             <span>Items</span>
                         </a>
                     </li>
+                    
                     <li>
                         <a href="{{ route('calendar') }}">
                             <iconify-icon icon="solar:calendar-outline" class="menu-icon"></iconify-icon>

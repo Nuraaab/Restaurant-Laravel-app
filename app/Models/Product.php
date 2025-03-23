@@ -16,7 +16,7 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_pivot');
+        return $this->belongsToMany(Category::class, 'category_pivots');
     }
 
     public function reviews()
@@ -27,5 +27,24 @@ class Product extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'model');
+    }
+
+    public function sliders()
+    {
+        return $this->morphOne(Media::class, 'model')
+            ->where('collection_name', 'silder')
+            ->where('type', 'image');
+    }
+
+    public function thumbnail()
+    {
+        return $this->morphOne(Media::class, 'model')
+            ->where('collection_name', 'thumbnail')
+            ->where('type', 'image');
     }
 }
