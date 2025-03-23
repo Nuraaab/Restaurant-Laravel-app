@@ -1,14 +1,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Wowdash - Bootstrap 5 Admin Dashboard HTML Template</title>
     <link rel="icon" type="image/png"  href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- remix icon font css  -->
     <link rel="stylesheet"  href="{{ asset('assets/css/remixicon.css') }}">
+    {{-- dropzoon --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/dropzone.css') }}">
     <!-- BootStrap css -->
     <link rel="stylesheet"  href="{{ asset('assets/css/lib/bootstrap.min.css') }}">
+    <!-- Bootstrap Datepicker CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker.css') }}">
 
     {{-- toaster --}}
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.min.css') }}">

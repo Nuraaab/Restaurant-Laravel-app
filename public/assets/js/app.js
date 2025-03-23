@@ -126,6 +126,95 @@
     });
   });
 
+   // insertitem
+   $('#itemForm').on('submit', function (e) {
+    console.log('hiiii');
+    $('.request-loader').addClass('show');
+    e.preventDefault();
+
+    let action = $('#itemForm').attr('action');
+    let fd = new FormData(document.querySelector('#itemForm'));
+
+    $.ajax({
+        url: action,
+        method: 'POST',
+        data: fd,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log('Post Form', data);
+            $('.request-loader').removeClass('show');
+            if (data == 'success') {
+                window.location = fullUrl;
+            }
+        },
+        error: function (error) {
+            console.log('error : ', error);
+
+            let errors = ``;
+            for (let x in error.responseJSON.errors) {
+                errors += `<li>
+                    <p class="text-danger mb-0">${error.responseJSON.errors[x][0]}</p>
+                </li>`;
+            }
+
+            $('#postErrors ul').html(errors);
+            $('#postErrors').fadeIn().addClass('show'); // Show alert and add fade-in effect
+
+            $('.request-loader').removeClass('show');
+
+            $('html, body').animate({
+                scrollTop: $('#postErrors').offset().top - 100
+            }, 1000);
+        }
+    });
+});
+
+
+
+
+// flash sale model  active / deactive
+
+$(document).on('change', '.manageFlash', function (e) {
+  console.log('hellooo');
+  var $val = $(this).val();
+  var $itemId = $(this).attr('data-item-id');
+  
+  // Get the CSRF token from the meta tag
+  var csrfToken = $('meta[name="csrf-token"]').attr('content');
+  console.log('token', csrfToken);
+  if ($val == 0) {
+    let url = $("#flashForm" + $itemId).attr('action');
+    let method = $("#flashForm" + $itemId).attr('method');
+    
+    console.log(url);
+    
+    $.ajax({
+      url: url,
+      method: method,
+      data: {
+        itemId: $itemId, 
+        val: $val,
+        _token: csrfToken  // Include the CSRF token here
+      },
+      success: function (data) {
+        if (data == "success") {
+          location.reload();
+        }
+      },
+      error: function (error) {
+        $(".request-loader").removeClass("show");
+      }
+    });
+  } else {
+    $("#flashmodal" + $itemId).modal('show');
+  }
+});
+
+
+
+
+
   // sidebar submenu collapsible js
   $(".sidebar-menu .dropdown").on("click", function(){
     var item = $(this);
@@ -255,5 +344,85 @@ $('#selectAll').on('change', function () {
       $('.no-items-found').show();
     }
   });
+
+
+  $(".datapicker").flatpickr({
+    enableTime: false,  
+    dateFormat: "Y-m-d", 
+    altInput: true, 
+    altFormat: "F j, Y",
+    minDate: null, 
+    disableMobile: true
+});
+
+$(".timepicker").flatpickr({
+  enableTime: true,  
+  noCalendar: true,  
+  dateFormat: "H:i",
+  altInput: true, 
+  altFormat: "h:i K",
+  minDate: "00:00",
+  maxDate: "23:59",
+  disableMobile: true
+});
+
+
+     // flash Sale form
+  $(document).on('click', '.submitBtn', function (e) {
+    $(e.target).attr('disabled', true);
+    var $id = $(this).attr('data-id')
+    $(".request-loader").addClass("show");
+
+    let modalform = document.getElementById('modalform' + $id);
+    let fd = new FormData(modalform);
+    let url = $("#modalform" + $id).attr('action');
+    let method = $("#modalform" + $id).attr('method');
+
+    $.ajax({
+      url: url,
+      method: method,
+      data: fd,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+
+        // console.log(data, 'success', typeof data.error);
+        $(e.target).attr('disabled', false);
+        $(".request-loader").removeClass("show");
+
+        $(".em").each(function () {
+          $(this).html('');
+        })
+        if (data == "success") {
+
+          location.reload();
+        }
+        // if error occurs
+        else if (typeof data.error != 'undefined') {
+
+          for (let x in data) {
+            if (x == 'error') {
+              continue;
+            }
+            $("#modalform" + $id).find('#err' + x).text(data[x][0]);
+          }
+        }
+      },
+      error: function (error) {
+
+        $(".em").each(function () {
+          $(this).html('');
+        })
+        console.log(error.responseJSON.errors);
+        for (let x in error.responseJSON.errors) {
+          $("#modalform" + $id).find('#err' + x).text(error.responseJSON.errors[x][0]);
+        }
+        $(".request-loader").removeClass("show");
+        $(e.target).attr('disabled', false);
+      }
+    });
+  });
+
+  
   // Remove Table Tr when click on remove btn end
 })(jQuery);

@@ -1,6 +1,6 @@
 @extends('layout.layout')
 @php
-    $title='Category';
+    $title='Menu Management';
     $subTitle = 'Category';
     $script ='<script>
                         $(".remove-item-btn").on("click", function() {
