@@ -97,16 +97,26 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($order->order_status == 'delivered')
-                                            <span
-                                                class="bg-success-focus text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm">Delivered</span>
-                                        @elseif ($order->order_status == 'shipped')
-                                            <span
-                                                class="bg-info-focus text-info-600 border border-info-main px-24 py-4 radius-4 fw-medium text-sm">Shipped</span>
-                                        @else
-                                            <span
-                                                class="bg-warning-focus text-warning-600 border border-warning-main px-24 py-4 radius-4 fw-medium text-sm">Pending</span>
-                                        @endif
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <form action="{{ route('user.menu.order.status') }}"
+                                                id="statusForm{{ $order->id }}" method="POST" class="d-flex">
+                                                @csrf
+                                                <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                                <select name="order_status"
+                                                    class="form-select form-select-sm @if ($order->order_status == 'delivered') bg-success text-white @elseif ($order->order_status == 'shipped') bg-info text-white @else bg-warning text-white @endif"
+                                                    onchange="document.getElementById('statusForm{{ $order->id }}').submit();">
+                                                    <option value="pending"
+                                                        {{ $order->order_status == 'pending' ? 'selected' : '' }}>Pending
+                                                    </option>
+                                                    <option value="shipped"
+                                                        {{ $order->order_status == 'shipped' ? 'selected' : '' }}>Shipped
+                                                    </option>
+                                                    <option value="delivered"
+                                                        {{ $order->order_status == 'delivered' ? 'selected' : '' }}>
+                                                        Delivered</option>
+                                                </select>
+                                            </form>
+                                        </div>
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center gap-10 justify-content-center">
@@ -140,60 +150,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Create Service Category Modal -->
-
-    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add Menu Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="ajaxForm" class="modal-form" enctype="multipart/form-data"
-                        action="{{ route('user.menu.category.store') }}" method="POST">
-                        @csrf
-                        <p id="errslug" class="mb-0 text-danger em"></p>
-                        <div class="form-group">
-                            <div class="col-12 mb-2">
-                                <label for="image"><strong>{{ __('Category Image') }} **</strong></label>
-                            </div>
-                            <div class="col-md-12 showImage mb-3">
-                                <img src="{{ asset('assets/admin/img/noimage.jpg') }}" alt="..."
-                                    class="img-thumbnail">
-                            </div>
-                            <input type="file" name="image" id="image" class="form-control">
-                            <p id="errimage" class="mb-0 text-danger em"></p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Name **</label>
-                            <input type="text" class="form-control" name="name" value=""
-                                placeholder="Enter name">
-                            <p id="errname" class="mb-0 text-danger em"></p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Status **</label>
-                            <select class="form-control ltr" name="status">
-                                <option value="" selected disabled>Select a status</option>
-                                <option value="1">Active</option>
-                                <option value="0">Deactive</option>
-                            </select>
-                            <p id="errstatus" class="mb-0 text-danger em"></p>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="submitBtn" type="button" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
 @endsection
