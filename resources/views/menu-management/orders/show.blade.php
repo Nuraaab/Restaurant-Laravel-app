@@ -21,8 +21,6 @@
                 <div class="col-md-6">
                     <h5>Order #{{ $order->id }}</h5>
                     <p class="mb-1">Date: {{ $order->created_at->format('d M Y h:i a') }}</p>
-                </div>
-                <div class="col-md-6 text-end">
                     <div class="mb-2">
                         <span class="fw-bold">Order Status:</span>
                         @if ($order->order_status == 'delivered')
@@ -48,6 +46,17 @@
                     </div>
                     <div class="mt-2">
                         <span class="fw-bold">Payment Method:</span> {{ $order->payment_method }}
+                    </div>
+                </div>
+                <div class="col-md-6 text-start">
+                    <div class="card p-3 bg-base">
+                        <h6 class="mb-3">Customer Information</h6>
+                        <p class="mb-1">Name: {{ $order->first_name }} {{ $order->last_name }}</p>
+                        <p class="mb-1">Email: {{ $order->email }}</p>
+                        <p class="mb-1">Phone: {{ $order->phone_number }}</p>
+                        <p class="mb-1">Address: {{ $order->address }}</p>
+                        <p class="mb-1">City: {{ $order->city }}</p>
+                        <p class="mb-0">Country: {{ $order->country }}</p>
                     </div>
                 </div>
             </div>
@@ -80,18 +89,7 @@
                 </table>
             </div>
 
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card p-3 bg-base">
-                        <h6 class="mb-3">Customer Information</h6>
-                        <p class="mb-1">Name: {{ $order->first_name }} {{ $order->last_name }}</p>
-                        <p class="mb-1">Email: {{ $order->email }}</p>
-                        <p class="mb-1">Phone: {{ $order->phone_number }}</p>
-                        <p class="mb-1">Address: {{ $order->address }}</p>
-                        <p class="mb-1">City: {{ $order->city }}</p>
-                        <p class="mb-0">Country: {{ $order->country }}</p>
-                    </div>
-                </div>
+            <div class="row mt-4 d-flex justify-content-end">
                 <div class="col-md-6">
                     <div class="card p-3 bg-base">
                         <table class="table table-borderless">

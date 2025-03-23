@@ -76,4 +76,24 @@ class OrderController extends Controller
         Session::flash('success', 'Order deleted successfully!');
         return back();
     }
+
+    public function updateStatus(Request $request)
+    {
+        $validatedData = $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'order_status' => 'required|string'
+        ]);
+
+        try {
+            $order = Order::findOrFail($validatedData['order_id']);
+            $order->order_status = $validatedData['order_status'];
+            $order->save();
+
+            Session::flash('success', "Order status set to {$validatedData['order_status']} successfully!");
+        } catch (\Exception $e) {
+            Session::flash('error', 'Failed to update order status. Please try again.');
+        }
+
+        return back();
+    }
 }
