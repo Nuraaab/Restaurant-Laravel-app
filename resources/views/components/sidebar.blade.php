@@ -11,7 +11,7 @@
     </div>
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
-            <li >
+            <li>
                 <a href="{{ route('index3') }}">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
@@ -43,34 +43,10 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('kanban') }}">
+                        <a href="{{ route('user.menu.order.index') }}">
                             <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
                             <span>Orders</span>
                         </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)">
-                            <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
-                            <span>Invoice</span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ route('invoiceList') }}"><i
-                                        class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> List</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('invoicePreview') }}"><i
-                                        class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Preview</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('invoiceAdd') }}"><i
-                                        class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add new</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('invoiceEdit') }}"><i
-                                        class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Edit</a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </li>
@@ -102,41 +78,24 @@
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-menu-group-title">User Management</li>
 
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
-                    <span>Customers</span>
+                    <span>User Management</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{ route('usersList') }}"><i
-                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Customer List</a>
+                        <a href="{{ route('CustomerList') }}">
+                            <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+                            <span>Customer</span>
+                        </a>
                     </li>
                     <li>
-                        <a href="{{ route('usersGrid') }}"><i
-                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Customer Grid</a>
-                    </li>
-                    {{-- <li>
-                        <a  href="{{ route('addUser') }}"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add User</a>
-                    </li>
-                    <li>
-                        <a  href="{{ route('viewProfile') }}"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> View Profile</a>
-                    </li> --}}
-                </ul>
-                <a href="javascript:void(0)">
-                    <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
-                    <span>Admins</span>
-                </a>
-                <ul class="sidebar-submenu">
-                    <li>
-                        <a href="{{ route('usersList') }}"><i
-                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Admins List</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('usersGrid') }}"><i
-                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Add Admin</a>
+                        <a href="{{ route('usersList') }}">
+                            <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+                            <span>Admins</span>
+                        </a>
                     </li>
                 </ul>
             </li>
