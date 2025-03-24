@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     use HasFactory;
@@ -34,10 +35,10 @@ class Product extends Model
         return $this->morphMany(Media::class, 'model');
     }
 
-    public function sliders()
+    public function gallery()
     {
         return $this->morphOne(Media::class, 'model')
-            ->where('collection_name', 'silder')
+            ->where('collection_name', 'gallery')
             ->where('type', 'image');
     }
 

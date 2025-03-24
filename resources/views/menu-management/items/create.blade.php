@@ -57,9 +57,6 @@
                 <form id="itemForm" class="" action="{{ route('user.menu.item.store') }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
-
-                    {{-- <input type="hidden" name="type" value="{{ request()->input('type') }}"> --}}
-
                     {{-- START: Featured Image --}}
                     <div class="form-group">
                         <div class="col-12 mb-2">
@@ -136,16 +133,6 @@
                             </div>
                         </div>
                     </div>
-
-                        {{-- <div class="col-lg-12 ">
-                            <div
-                                class="form-group ">
-                                <label for="">Tags </label>
-                                <input type="text" class="form-control"
-                                    name="tags" value=""
-                                    data-role="tagsinput" placeholder="Enter tags">
-                            </div>
-                        </div> --}}
                         <div class="col-lg-12">
                             <div
                                 class="form-group">
