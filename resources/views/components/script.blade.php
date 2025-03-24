@@ -138,6 +138,6 @@
         const rmvDbSliderImage = "{{ route('user.item.db-slider-remove') }}";
     </script>
     
-    {{-- <script src="{{ asset('assets/js/dropzone-slider.js') }}"></script>   --}}
+    <script src="{{ asset('assets/js/dropzone-slider.js') }}"></script>  
   
     <?php echo (isset($script) ? $script   : '')?>

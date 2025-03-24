@@ -43,24 +43,31 @@
         });
     }
     
-    function rmvdbimg(key, id) {
+    function rmvdbimg(key, id, image) {
+        console.log('Deleting image:', image);
         $(".request-loader").addClass("show");
+    
         $.ajax({
-            url: rmvDbSliderImage,
+            url: rmvDbSliderImage, // Ensure this is correctly defined
             type: 'POST',
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             data: {
                 key: key,
-                id: id
+                id: id,
+                image: image
             },
             success: function (data) {
                 $(".request-loader").removeClass("show");
-                $("#trdb" + key).remove();
-                var content = {};
     
-                content.message = 'Slider image deleted successfully!';
-                content.title = 'Success';
-                content.icon = 'fa fa-bell';
+                // Correctly remove the image div
+                $(".image-container").eq(key).fadeOut(300, function () { $(this).remove(); });
+    
+                // Notification
+                var content = {
+                    message: 'Slider image deleted successfully!',
+                    title: 'Success',
+                    icon: 'fa fa-bell'
+                };
     
                 $.notify(content, {
                     type: 'success',
@@ -71,7 +78,12 @@
                     time: 1000,
                     delay: 0,
                 });
+            },
+            error: function () {
+                $(".request-loader").removeClass("show");
+                alert("Something went wrong! Please try again.");
             }
         });
     }
+    
    

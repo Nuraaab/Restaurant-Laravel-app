@@ -439,6 +439,39 @@ body::after {
   border-radius: 5px !important;
 }
 
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap; /* Wrap to the next row if limit is reached */
+  gap: 10px; /* Add space between images */
+}
+
+.image-container {
+  position: relative;
+  width: 150px; /* Set fixed width */
+}
+
+.slider-image {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.close-btn:hover {
+  background: darkred;
+}
+
+
 
 .sidebar, .sidebar[data-background-color="white"] {
   margin-top: 0px !important;

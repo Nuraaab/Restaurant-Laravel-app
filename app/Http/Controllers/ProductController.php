@@ -106,16 +106,10 @@ class ProductController extends Controller
         $item->slug = $this->generateUniqueSlug($request->name);
         $item->status = $request->status;
         $item->price = $request->price;
+        $item->thumbnail = $thumbnailImgName;
         $item->save();
-        $item->thumbnail()->create([
-            'collection_name' => 'thumbnail',
-            'type' => 'image',
-            'file_path' => $thumbnailImgName,
-            'mime_type' => $thumbnailImgURL->getMimeType(),
-        ]);
-
-        $item->sliders()->create([
-            'collection_name' => 'slider',
+        $item->gallery()->create([
+            'collection_name' => 'gallery',
             'type' => 'image',
             'gallery' => json_encode($sliderImgURLs),
         ]);
@@ -133,15 +127,26 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Request $request, $id)
     {
-        //
+        $item = Product::findOrFail($id);
+
+        $data['sliders'] = $item->gallery ? json_decode($item->gallery, true) : [];
+
+        if (isset($data['sliders']['gallery'])) {
+            $data['galleries'] = json_decode($data['sliders']['gallery'], true);
+        }else{
+            $data['galleries'] =[];
+        }
+
+        $data['item'] = $item;
+        return view('menu-management.items.edit', $data);
     }
 
     /**
@@ -149,7 +154,81 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $allowedExtensions = array('jpg', 'jpeg', 'png', 'svg');
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailImgURL = $request->thumbnail;
+            $thumbnailImgExt = $thumbnailImgURL ? $thumbnailImgURL->extension() : null;
+            $rules['thumbnail'] = function ($attribute, $value, $fail) use ($allowedExtensions, $thumbnailImgExt) {
+                if (!in_array($thumbnailImgExt, $allowedExtensions)) {
+                    $fail('Only .jpg, .jpeg, .png and .svg file is allowed for thumbnail image.');
+                }
+            };
+        }
+        $sliderImgURLs = array_key_exists("image", $request->all()) && count($request->image) > 0 ? $request->image : [];
+        $sliderImgExts = [];
+        // get all the slider images extension
+        if (!empty($sliderImgURLs)) {
+            foreach ($sliderImgURLs as $sliderImgURL) {
+                $n = strrpos($sliderImgURL, ".");
+                $extension = ($n === false) ? "" : substr($sliderImgURL, $n + 1);
+                array_push($sliderImgExts, $extension);
+            }
+        }
+        if (array_key_exists("image", $request->all()) && count($request->image) > 0) {
+            $rules['image'] = function ($attribute, $value, $fail) use ($allowedExtensions, $sliderImgExts) {
+                foreach ($sliderImgExts as $sliderImgExt) {
+                    if (!in_array($sliderImgExt, $allowedExtensions)) {
+                        $fail('Only .jpg, .jpeg, .png and .svg file is allowed for slider image.');
+                        break;
+                    }
+                }
+            };
+        }
+
+        $item = Product::find($request->item_id);
+        $categories = $request->input('category');
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailImgURL = $request->thumbnail;
+            @unlink(public_path('assets/admin/img/items/thumbnail/' . $item->thumbnail));
+            $thumbnailImgName = time() . '.' . $thumbnailImgExt;
+            $thumbnailDir = public_path('assets/admin/img/items/thumbnail/');
+            @copy($thumbnailImgURL, $thumbnailDir . $thumbnailImgName);
+        }
+
+        $pre_title = $item->title ?? '';
+        $pre_slug = $item->slug ?? ''; 
+
+        $item->name = $request->name;
+        $item->description = $request->description;
+        $item->slug = $this->generateUniqueSlugUpdate($request->name, $pre_title, $pre_slug);
+        $item->status = $request->status;
+        $item->price = $request->price;
+        $item->thumbnail = $request->hasFile('thumbnail') ? $thumbnailImgName : $item->thumbnail;
+        $item->save();
+        $gallery = $item->gallery()->first();
+        if ($gallery) {
+            $existingGallery = json_decode($gallery->gallery, true);
+            $updatedGallery = array_merge($existingGallery, $sliderImgURLs);
+            $gallery->update([
+                'gallery' => json_encode($updatedGallery),
+            ]);
+        } else {
+            $item->gallery()->create([
+                'collection_name' => 'gallery',
+                'type' => 'image',
+                'gallery' => json_encode($sliderImgURLs),
+            ]);
+        }
+        if (!empty($categories)) {
+            $currentCategories = $item->categories->pluck('id')->toArray();
+            $categoriesToAttach = array_diff($categories, $currentCategories);
+            $categoriesToDetach = array_diff($currentCategories, $categories);
+            $item->categories()->attach($categoriesToAttach);
+            $item->categories()->detach($categoriesToDetach);
+        }
+        
+        Session::flash('success', 'Product updated successfully!');
+        return "success";
     }
 
     /**
@@ -202,6 +281,24 @@ class ProductController extends Controller
         return $slug;
     }
 
+    private function generateUniqueSlugUpdate($title, $item_title, $pre_slug)
+    {
+        $slug = make_slug($title);
+        if ($item_title == $title) {
+            return $pre_slug;
+        } else {
+            $originalSlug = $slug;
+            $counter = 1;
+    
+            // Ensure the slug is unique
+            while (Product::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
+            return $slug;
+        }
+    }
+
     public function feature(Request $request)
     {
 
@@ -232,7 +329,6 @@ class ProductController extends Controller
 
     public function setFlashSale($id, Request $request)
     {
-      
         $rules = [
             'start_date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
@@ -250,6 +346,7 @@ class ProductController extends Controller
             'discount_amount.numeric' => 'The discount must be a number',
             'discount_amount.min' => 'The discount cannot be negative',
         ];
+    
         $validator = Validator::make($request->all(), $rules, $messages);
     
         if ($validator->fails()) {
@@ -257,20 +354,76 @@ class ProductController extends Controller
                 'errors' => $validator->getMessageBag()->toArray()
             ], 400);
         }
+    
         $localTimezone = 'Africa/Addis_Ababa';
-        $startDate = $request->start_date . ' ' . $request->start_time;
-        $startDateTime = Carbon::parse($startDate)->timezone($localTimezone)->setTimezone('UTC');
-        $endDate = $request->end_date . ' ' . $request->end_time;
-        $endDateTime = Carbon::parse($endDate)->timezone($localTimezone)->setTimezone('UTC');
+        $now = Carbon::now($localTimezone);
+        $startDateTime = Carbon::parse("{$request->start_date} {$request->start_time}", $localTimezone)->setTimezone('UTC');
+        $endDateTime = Carbon::parse("{$request->end_date} {$request->end_time}", $localTimezone)->setTimezone('UTC');
+    
+        if ($startDateTime->lt($now->startOfDay())) {
+            return Response::json([
+                'errors' => ['start_date' => ['The start date must be today or in the future']]
+            ], 400);
+        }
+    
+        if ($endDateTime->lte($now->endOfDay())) {
+            return Response::json([
+                'errors' => ['end_date' => ['The end date must be after today']]
+            ], 400);
+        }
+    
+        if ($endDateTime->lessThanOrEqualTo($startDateTime)) {
+            return Response::json([
+                'errors' => ['end_date' => ['The end date and time must be after the start date and time']]
+            ], 400);
+        }
+    
         $item = Product::findOrFail($id);
         $item->discount_start_date = $startDateTime;
         $item->discount_end_date = $endDateTime;
         $item->discount_amount = $request->discount_amount;
         $item->flash = 1;
         $item->save();
+    
         Session::flash('success', 'Flash sale information set successfully');
-        
+    
         return "success";
     }
+
+    public function delete(Request $request)
+    {
+        $item = Product::findOrFail($request->item_id);
+        @unlink(public_path('assets/admin/img/items/thumbnail/' . $item->thumbnail));
+        $gallery = $item->gallery()->first();
+        if ($gallery) {
+            $galleries = json_decode($gallery->gallery, true) ?? [];
+            foreach ($galleries as $key => $image) {
+                @unlink(public_path('assets/admin/img/items/slider-images/' . $image));
+            }
+            $gallery->delete();
+        }
+        $item->delete();
+        Session::flash('success', 'Item deleted successfully!');
+        return back();
+    }
+    
+
+
+    public function dbSliderRemove(Request $request)
+    {
+        $item = Product::findOrFail($request->id);
+        $gallery = json_decode($item->gallery->gallery, true);
+        $imageToRemove = $request->image;
+        if (($key = array_search($imageToRemove, $gallery)) !== false) {
+            unset($gallery[$key]);
+            $gallery = array_values($gallery);
+            $item->gallery->update(['gallery' => json_encode($gallery)]);
+            @unlink(public_path('assets/admin/img/items/slider-images/' . $imageToRemove));
+            return response()->json(['status' => 200, 'message' => 'Image removed successfully']);
+        }
+        return response()->json(['status' => 400, 'message' => 'Image not found']);
+    }
+    
+    
     
 }
