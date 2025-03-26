@@ -104,11 +104,15 @@ Route::resource('cart', CartController::class);
 //order
 Route::resource('order', OrderController::class);
 
-//OnlinePaymentController
-Route::resource('onlinepayment', OnlinePaymentController::class);
+//payment gateway
+Route::prefix('paymentgateway')->group(function () {
+    // OnlinePaymentController
+    Route::resource('online', OnlinePaymentController::class)->names('paymentgateway.online');
 
-//OfflinePaymentController
-Route::resource('offlinepayment', OfflinePaymentController::class);
+    // OfflinePaymentController
+    Route::resource('offline', OfflinePaymentController::class)->names('paymentgateway.offline');
+});
+
 
 //invoice
 Route::resource('invoice', InvoiceController::class);
