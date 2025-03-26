@@ -466,5 +466,46 @@
       }
     });
   });
+  // settings form submission
+  $('#settingsForm').on('submit', function (e) {
+    console.log("objectqwee")
+    $('.request-loader').addClass('show');
+    e.preventDefault();
+
+    let action = $('#settingsForm').attr('action');
+    let fd = new FormData(document.querySelector('#settingsForm'));
+
+    $.ajax({
+      url: action,
+      method: 'POST',
+      data: fd,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        $('.request-loader').removeClass('show');
+        if (data == 'success') {
+          window.location = fullUrl;
+        }
+      },
+      error: function (error) {
+
+        let errors = ``;
+        for (let x in error.responseJSON.errors) {
+          errors += `<li>
+                    <p class="text-danger mb-0">${error.responseJSON.errors[x][0]}</p>
+                </li>`;
+        }
+
+        $('#postErrors ul').html(errors);
+        $('#postErrors').fadeIn().addClass('show');
+
+        $('.request-loader').removeClass('show');
+
+        $('html, body').animate({
+          scrollTop: $('#postErrors').offset().top - 100
+        }, 1000);
+      }
+    });
+  });
 
 })(jQuery);

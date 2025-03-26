@@ -28,7 +28,7 @@ class CouponController extends Controller
         $data['search'] = $search;
         $data['perPage'] = $perPage;
 
-        return view('coupons.index', $data);
+        return view('menu-management.coupons.index', $data);
     }
 
     /**
@@ -36,7 +36,7 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view('coupons.create');
+        return view('menu-management.coupons.create');
     }
 
     /**
@@ -115,7 +115,7 @@ class CouponController extends Controller
     public function edit($id)
     {
         $coupon = Coupon::findOrFail($id);
-        return view('coupons.edit', compact('coupon'));
+        return view('menu-management.coupons.edit', compact('coupon'));
     }
 
     /**

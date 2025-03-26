@@ -381,3 +381,7 @@ Route::prefix('cryptocurrency')->group(function () {
         Route::get('/wallet', 'wallet')->name('wallet');
     });
 });
+
+// Settings Routes
+Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+Route::post('/settings/update', [SettingsController::class, 'update'])->name('settings.update');
