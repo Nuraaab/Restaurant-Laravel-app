@@ -37,7 +37,7 @@
                     </li>
                     
                     <li>
-                        <a href="{{ route('calendar') }}">
+                        <a href="{{ route('user.coupon.index') }}">
                             <iconify-icon icon="solar:calendar-outline" class="menu-icon"></iconify-icon>
                             <span>Coupones</span>
                         </a>
@@ -103,16 +103,16 @@
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <i class="ri-user-settings-line text-xl me-6 d-flex w-auto"></i>
-                    <span>Role & Access</span>
+                    <span>Sections</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
                         <a href="{{ route('roleAaccess') }}"><i
-                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Role & Access</a>
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Hero Section</a>
                     </li>
                     <li>
                         <a href="{{ route('assignRole') }}"><i
-                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Assign Role</a>
+                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i>Hide/Show Section</a>
                     </li>
                 </ul>
             </li>

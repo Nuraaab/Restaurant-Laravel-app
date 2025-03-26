@@ -58,6 +58,18 @@ Route::prefix('menu')->group(function () {
         Route::post('/category/update', 'update')->name('user.menu.category.update');
         Route::post('/category/delete', 'delete')->name('user.menu.category.delete');
     });
+
+    //coupons
+    Route::controller(CouponController::class)->group(function () {
+        Route::get('/coupon', 'index')->name('user.coupon.index');
+        Route::get('/coupon/create', 'create')->name('user.coupon.create');
+        Route::post('/coupon/store', 'store')->name('user.coupon.store');
+        Route::get('/coupon/{id}/edit', 'edit')->name('user.coupon.edit');
+        Route::post('/coupon/update', 'update')->name('user.coupon.update');
+        Route::post('/coupon/delete', 'delete')->name('user.coupon.delete');
+        Route::post('/coupon/status', 'status')->name('user.coupon.status');
+    });
+
     //orders
     Route::controller(OrderController::class)->group(function () {
         Route::get('/order', 'index')->name('user.menu.order.index');
