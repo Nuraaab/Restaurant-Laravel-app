@@ -65,13 +65,13 @@
 
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{ route('email') }}">
+                        <a href="{{ route('paymentgateway.offline.index') }}">
                             <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
                             <span>Offline</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('chatMessage') }}">
+                        <a href="{{ route('paymentgateway.online.index') }}">
                             <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
                             <span>Online</span>
                         </a>

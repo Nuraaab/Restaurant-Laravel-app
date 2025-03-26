@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->text('information');
+            $table->json('information');
             $table->boolean('status');
             $table->timestamps();
         });
