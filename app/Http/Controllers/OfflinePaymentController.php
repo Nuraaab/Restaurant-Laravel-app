@@ -61,14 +61,14 @@ class OfflinePaymentController extends Controller
         $offlinePayment->description = $request->description;
         $offlinePayment->name = $request->name;
 
-        $offlinePayment->status = $request->status=='1'?true:false;
+        $offlinePayment->status = $request->status == '1' ? true : false;
 
 
         $offlinePayment->save();
 
 
 
-         // Handle file upload (logo)
+        // Handle file upload (logo)
         if ($request->hasFile('image')) {
             $logoImgURL = $request->file('image');
             $logoImgExt = $logoImgURL->extension();
@@ -97,6 +97,7 @@ class OfflinePaymentController extends Controller
     public function show(OfflinePayment $offlinePayment)
     {
         //
+        dd($offlinePayment);
     }
 
     /**
@@ -105,6 +106,8 @@ class OfflinePaymentController extends Controller
     public function edit(OfflinePayment $offlinePayment)
     {
         //
+
+        dd($offlinePayment);
     }
 
     /**
@@ -113,13 +116,33 @@ class OfflinePaymentController extends Controller
     public function update(Request $request, OfflinePayment $offlinePayment)
     {
         //
+        dd($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(OfflinePayment $offlinePayment)
+
+    public function delete(Request $request)
     {
-        //
+        $offlinePayment = OfflinePayment::findOrFail($request->id);
+        // dd($offlinePayment->logo);
+        @unlink(public_path('assets/admin/payment/offline/logo/' . $offlinePayment->logo->file_path));
+        $offlinePayment->delete();
+
+        Session::flash('success', 'Ofline Payment Method remove successfully!');
+        return back();
+    }
+    public function changestatus(Request $request, $id)
+    {
+
+        $offlinePayment = OfflinePayment::findOrFail($request->id);
+        $status = false;
+        if ($request->status) {
+            $status = true;
+        } else {
+            $status = false;
+        }
+        $offlinePayment->status = $status;
+        $offlinePayment->save();
+        Session::flash('success', 'Offline Payment Method ' . $offlinePayment->name . ' status turned ' . ($status ? "on" : "off") . ' successfully!');
+        return back();
     }
 }

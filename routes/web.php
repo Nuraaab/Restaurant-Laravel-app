@@ -108,9 +108,13 @@ Route::resource('order', OrderController::class);
 Route::prefix('paymentgateway')->group(function () {
     // OnlinePaymentController
     Route::resource('online', OnlinePaymentController::class)->names('paymentgateway.online');
+    Route::post('online/changestatus/{id}',[OnlinePaymentController::class,'changestatus'])->name('paymentgateway.online.changestatus');
 
     // OfflinePaymentController
     Route::resource('offline', OfflinePaymentController::class)->names('paymentgateway.offline');
+    Route::post('delete',[OfflinePaymentController::class,'delete'])->name('paymentgateway.offline.delete');
+    Route::post('offline/changestatus/{id}',[OfflinePaymentController::class,'changestatus'])->name('paymentgateway.offline.changestatus');
+
 });
 
 

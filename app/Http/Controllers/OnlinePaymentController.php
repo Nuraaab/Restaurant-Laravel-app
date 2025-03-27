@@ -107,4 +107,20 @@ class OnlinePaymentController extends Controller
     {
         //
     }
+
+    public function changestatus(Request $request, $id)
+    {
+
+        $onlinePayment = OnlinePayment::findOrFail($request->id);
+        $status = false;
+        if ($request->status) {
+            $status = true;
+        } else {
+            $status = false;
+        }
+        $onlinePayment->status = $status;
+        $onlinePayment->save();
+        Session::flash('success', 'Online Payment Method ' . $onlinePayment->name . ' status turned ' . ($status ? "on" : "off") . ' successfully!');
+        return back();
+    }
 }

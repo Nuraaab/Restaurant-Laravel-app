@@ -10,30 +10,34 @@
         <div class="card-body p-24">
             <div class="row gy-4">
                 <div class="col-xxl-6">
-                    <form method="POST" action="{{ route('paymentgateway.online.update', $chapa->id) }}"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="card radius-12 shadow-none border overflow-hidden">
 
-                            <div
-                                class="card-header bg-neutral-100 border-bottom py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
-                                <div class="d-flex align-items-center gap-10">
-                                    <span
-                                        class="w-36-px h-36-px bg-base rounded-circle d-flex justify-content-center align-items-center">
-                                        @if($chapa->logo)
-                                            <img src="{{ asset('assets/admin/payment/online/logo/' . $chapa->logo->file_path) }}"
-                                                alt="Logo" class="">
-                                        @else
-                                            <img src="{{ asset('storage/' . "") }}" alt="" class="">
-                                        @endif
-                                    </span>
-                                    <span class="text-lg fw-semibold text-primary-light">{{$chapa->name}}</span>
-                                </div>
-                                <div class="form-switch switch-primary d-flex align-items-center justify-content-center">
-                                    <input class="form-check-input" type="checkbox" role="switch" {{ $chapa->status ? 'checked' : '' }}>
-                                </div>
+                    <div class="card radius-12 shadow-none border overflow-hidden">
+
+                        <div
+                            class="card-header bg-neutral-100 border-bottom py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
+                            <div class="d-flex align-items-center gap-10">
+                                <span
+                                    class="w-36-px h-36-px bg-base rounded-circle d-flex justify-content-center align-items-center">
+                                    @if($chapa->logo)
+                                        <img src="{{ asset('assets/admin/payment/online/logo/' . $chapa->logo->file_path) }}"
+                                            alt="Logo" class="">
+                                    @else
+                                        <img src="{{ asset('storage/' . "") }}" alt="" class="">
+                                    @endif
+                                </span>
+                                <span class="text-lg fw-semibold text-primary-light">{{$chapa->name}}</span>
                             </div>
+                            <form action="{{ route('paymentgateway.online.changestatus', $chapa->id) }}" method="POST">
+                                @csrf
+                                <div class="form-switch switch-primary d-flex align-items-center justify-content-center">
+                                    <input name="status" class="form-check-input" type="checkbox" role="switch" {{ $chapa->status ? 'checked' : '' }} onchange="submit()" />
+                                </div>
+                            </form>
+                        </div>
+                        <form method="POST" action="{{ route('paymentgateway.online.update', $chapa->id) }}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
                             <div class="card-body p-24">
                                 <div class="row gy-3">
                                     <div class="col-sm-6">
@@ -68,8 +72,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
