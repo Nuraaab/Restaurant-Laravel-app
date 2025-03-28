@@ -21,7 +21,7 @@ class OfflinePaymentController extends Controller
         $offlinePayments = OfflinePayment::with('logo')->get();
         // dd($chapa->logo,$chapa);
 
-        return view('payment-geteway.offlinePaymentGateway', compact('offlinePayments'));
+        return view('payment-geteway.offline.index', compact('offlinePayments'));
     }
 
     /**
@@ -103,20 +103,68 @@ class OfflinePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OfflinePayment $offlinePayment)
+    public function edit( $id)
     {
         //
+        $data =OfflinePayment::with('logo')->findOrFail($id);
 
-        dd($offlinePayment);
+        // dd($data->logo);
+        return view('payment-geteway.offline.edit',compact('data'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OfflinePayment $offlinePayment)
+    public function update(Request $request,)
     {
-        //
-        dd($request->all());
+        $rules = [
+            'payment_id' => 'required',
+            'name' => 'max:255',
+            'instruction' => 'string',
+            'description' => 'string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+
+
+        $offlinePayment = OfflinePayment::findOrFail($request->payment_id);
+        $offlinePayment->instruction = $request->instruction;
+        $offlinePayment->description = $request->description;
+        $offlinePayment->name = $request->name;
+
+        $offlinePayment->save();
+
+
+
+        // Handle file upload (logo)
+        if ($request->hasFile('image')) {
+            $logoImgURL = $request->file('image');
+            $logoImgExt = $logoImgURL->extension();
+
+            // Set a name for the logo image and store it to local storage
+            $logoImgName = time() . '.' . $logoImgExt;
+            $logoDir = public_path('assets/admin/payment/offline/logo/');
+            @mkdir($logoDir, 0775, true);
+            @copy($logoImgURL, $logoDir . $logoImgName);
+
+            // Save to media table
+            Media::updateOrCreate(
+                ['model_type' => OfflinePayment::class, 'model_id' => $offlinePayment->id, 'collection_name' => 'logo'],
+                ['file_path' => $logoImgName, 'type' => 'image', 'mime_type' => $logoImgURL->getMimeType()]
+            );
+        }
+
+
+        Session::flash('success', 'Ofline Payment Method Update successfully!');
+        return "success";
     }
 
 
