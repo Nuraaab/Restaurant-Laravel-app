@@ -19,7 +19,7 @@ class OnlinePaymentController extends Controller
         $chapa = OnlinePayment::with('logo')->findOrFail(1);
         // dd($chapa->logo,$chapa);
 
-        return view('payment-geteway.onlinePaymentGateway', compact('chapa'));
+        return view('payment-geteway.online.index', compact('chapa'));
     }
 
     /**
